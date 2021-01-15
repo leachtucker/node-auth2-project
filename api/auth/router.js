@@ -94,6 +94,7 @@ router.get('/users', restrict(), (req, res) => {
         .catch(() => {
             res.status(500).json(dbErrorMsg);
         })
+        
 })
 
 // MIDDLEWARE //
