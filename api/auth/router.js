@@ -83,7 +83,9 @@ router.post('/login', validateCredentials(), (req, res) => {
 })
 
 router.get('/users', restrict(), (req, res) => {
-    Users.find()
+    const { department } = req.user;
+
+    Users.findByDepartment(department)
         .then(users => {
             res.status(200).json({
                 data: users
