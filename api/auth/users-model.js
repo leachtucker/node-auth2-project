@@ -1,6 +1,6 @@
 const db = require('../../data/dbConfig');
 
-// Returns _arrays_ of all users
+// Returns _array_ of all users
 function find() {
     return db('users');
 }
@@ -13,6 +13,13 @@ function findById(id) {
 // Returns user object with specified username
 function findByUsername(username) {
     return db('users').where({ username }).first();
+}
+
+// Returns _array_ of users with specified department
+/// @department String
+function findByDepartment(department) {
+    return db('users').where('department', department)
+        .select('username', 'department')
 }
 
 // Adds user to database and returns new user object
@@ -33,5 +40,6 @@ module.exports = {
     find,
     findById,
     findByUsername,
+    findByDepartment,
     add
 }

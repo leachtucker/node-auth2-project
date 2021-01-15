@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
+const restrict = require('./restrictMiddleware');
+
 const Users = require('./users-model');
 const generateToken = require('./utils/generateToken');
 
@@ -75,10 +77,20 @@ router.post('/login', validateCredentials(), (req, res) => {
             res.cookie('token', token);
             return res.status(200).json({
                 message: "Logged in",
-                data: {
-                    token: token
-                }
+                token: token
             })
+        })
+})
+
+router.get('/users', restrict(), (req, res) => {
+    Users.find()
+        .then(users => {
+            res.status(200).json({
+                data: users
+            })
+        })
+        .catch(() => {
+            res.status(500).json(dbErrorMsg);
         })
 })
 
